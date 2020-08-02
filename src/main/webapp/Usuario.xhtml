@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+   
+    
+    <h:head>
+        <title>Formulario Usuario</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+            #frmUsuario{
+                margin: 0 auto;
+                text-align: center;
+                width: 850px;                    
+            }
+        </style>
+    </h:head>
+    <h:body style="background-color:#E6F6F7;">
+         <h:form id="frmUsuario" >
+             <p:growl id="messages" showDetail="true" />
+            <p:panel id="paneles" header="Ingreso Usuario"  >
+                <h:graphicImage name="images/users.png" width="100" />
+                <h:panelGrid columns="2" >                    
+                    <p:outputLabel style="margin-right:1px;font-weight:bold">Usuario</p:outputLabel>
+                    <p:inputText style="font-size:14px" id="nombreUsuario" value="#{usuarioview.usuario}"></p:inputText>
+                    <p:outputLabel style="margin-right:1px;font-weight:bold">Password</p:outputLabel>
+                    <p:inputText style="font-size:14px" id="usuarioPassword" value="#{usuarioview.password}"></p:inputText>
+                    <p:outputLabel style="margin-right:1px;font-weight:bold">Tipo Usuario</p:outputLabel>
+                    <p:inputText style="font-size:14px" id="tipoUsuario" value="#{usuarioview.tipoUsuario}"></p:inputText>
+                    
+                 </h:panelGrid>
+                    
+                <p:separator></p:separator>
+                <p:commandButton style="font-size:16px" value="Save"
+                                 icon="fa fa-save"
+                                 action="#{usuarioview.insertarUsuario()}"
+                                 update=":frmUsuario:listaUsuario">
+                </p:commandButton>
+                <p:commandButton style="font-size:16px" id="btRegresarMenuprincipal" 
+                                 value="Regresar" action="/protegido/principal" 
+                                 icon="pi pi-arrow-left">
+                </p:commandButton>
+                
+            </p:panel>
+             
+             <h:panelGrid >
+                 
+                            <p:dataTable id="listaUsuario" var="lisUsua" widgetVar="listaUsuario"
+                                         rows="10" paginator="true" paginatorPosition="bottom"
+                                         scrollable="true"
+                                         scrollRows="20"
+                                         scrollHeight="350"
+                                         value="#{usuarioview.listarUsuario}"> 
+                                                       
+                                <p:column  headerText="usuid" filterMatchMode="contains">
+                                    <h:outputText id="txtUsuid" value="#{lisUsua.idUsuario}" ></h:outputText>
+                                </p:column>
+                                
+                                 <p:column style="font-size:14px" headerText="usunombre" filterMatchMode="contains">
+                                     <h:outputText  id="listNombreUsuario" value="#{lisUsua.usuario}"  ></h:outputText>
+                                </p:column>
+                                <p:column  style="font-size:14px" headerText="usuclave" filterMatchMode="contains">
+                                    <h:outputText id="listclave" value="#{lisUsua.password}"></h:outputText>
+                                </p:column>
+                                
+                                <p:column  style="font-size:14px" headerText="tipoUser" filterMatchMode="contains">
+                                    <h:outputText id="listtipouser" value="#{lisUsua.tipoUsuario}"></h:outputText>
+                                </p:column> 
+                                
+                                <p:column >
+                                     <p:commandButton style="font-size:16px" value="Update" 
+                                                 icon="fa fa-pencil-square-o" 
+                                                 process="@this"
+                                                 actionListener="#{usuarioview.antActualizar(lisUsua)}" 
+                                                 onclick="PF('wdialog').show();"
+                                                 update=":frmUsuario:txtNombre 
+                                                 :frmUsuario:txtPass :frmUsuario:txtTipouser">
+                                     </p:commandButton>
+                                </p:column>
+                            
+                             <p:column >
+                                <p:commandButton style="font-size:16px" value="Delete" icon="fa fa-trash-o"  
+                                                 process="@this"
+                                                 actionListener="#{usuarioview.eliminar(lisUsua)}"
+                                                 update ="listaUsuario">
+                                </p:commandButton>
+                            </p:column>
+                                 
+                            </p:dataTable>                            
+                        </h:panelGrid>
+                <p:dialog id="dtUsuario" widgetVar="wdialog" header="Actualizacion de Registro"
+                              >
+                        <h:panelGrid columns="2">
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Usuario: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtNombre" size="30" value="#{usuarioview.nuevoUsuarioAct.usuario}"></p:inputText>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold" > Password: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtPass" size="30" value="#{usuarioview.nuevoUsuarioAct.password}"></p:inputText>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold" > TipoUser: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtTipouser" size="30" value="#{usuarioview.nuevoUsuarioAct.tipoUsuario}"></p:inputText>
+                            <p:commandButton style="font-size:16px" value="Modificar los Datos" 
+                                             icon="fa fa-save" 
+                                             process="@this txtNombre  txtPass txtTipouser"                                             
+                                             action="#{usuarioview.actualizarUsuario()}"
+                                             update="listaUsuario">                                             
+                            </p:commandButton>
+                           
+                        </h:panelGrid>
+                    </p:dialog>  
+        </h:form> 
+        
+        
+    </h:body>
+    
+    
+</html>
+

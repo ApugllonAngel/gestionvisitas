@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Lista de Visitas Pendientes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
+        <style type="text/css">
+            #frmVisitasTecnicas{
+                margin: 0 auto;
+                text-align: center;
+                width: 1200px;  
+                
+            }
+            
+            .paneles1{
+                text-align: left;
+                margin-left: 15%;
+            }
+            
+            .calendarFilter{
+                width: 15px
+            }
+
+        </style>
+    </h:head>
+    <h:body style="background-color:#8AA4E8;">
+        <h:form id="frmVisitasTecnicas" >
+            <p:panel header="Listado de Visitas Tecnicas Realizados" style="float:end ">
+                 
+                <h:panelGrid columns="4" >
+                    
+                    <p:dataTable id="dtvisitasrealizados" var="VisitasRealizados" widgetVar="listavisitasrealizados" 
+                                 rows="10" paginator="true" paginatorPosition="bottom" scrollable="true" 
+                                 scrollRows="30" scrollHeight="400" value="#{Reporteview.listavistrealizados}">
+                      
+                        <p:column style="margin-right:35px;font-weight:bold" headerText="Id">
+                            <h:outputText id="txtIdVistTec" style="font-size:13px" value="#{VisitasRealizados.idVisitasTecnicas}"></h:outputText>
+                        </p:column>
+                        
+                        <p:column headerText="Fecha">
+                            <h:outputText id="txtFecha" style="font-size:12px" value="#{VisitasRealizados.fecharegistro}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" type="date"/>
+                            </h:outputText>
+                        </p:column>
+                        
+                        <p:column  headerText="Artefacto">
+                           <h:outputText id="txtArt" style="font-size:12px" value="#{VisitasRealizados.artefacto}"></h:outputText>
+                        </p:column>
+                         
+                        <p:column  headerText="Marca">
+                           <h:outputText id="txtMarA" style="font-size:12px" value="#{VisitasRealizados.marcaartefacto}"></h:outputText>
+                        </p:column>
+                       
+                        <p:column  headerText="Daño">
+                            <h:outputText id="txtDaniAt" style="font-size:12px" value="#{VisitasRealizados.daniotefacto}"></h:outputText>
+                        </p:column>
+                        
+                        <p:column  headerText="Fecha Visita">
+                            <h:outputText id="txtFechaVisit" style="font-size:12px" value="#{VisitasRealizados.fechavisitatec}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" type="date"/>
+                            </h:outputText>
+                        </p:column>
+                        
+                        <p:column  headerText="Hora Visita">
+                            <h:outputText id="txtHoraVisit" style="font-size:12px" value="#{VisitasRealizados.hora}"></h:outputText>
+                        </p:column>
+                        
+                        <p:column  headerText="Nombre">
+                            <h:outputText id="txtnomc" style="font-size:12px" value="#{VisitasRealizados.clienteEdentidad.nombreCliente}"></h:outputText>
+                        </p:column>
+                        
+                        <p:column  headerText="Direccion">
+                            <h:outputText id="txtdirC" style="font-size:12px" value="#{VisitasRealizados.clienteEdentidad.dirrecionCliente}"></h:outputText>
+                        </p:column>
+                        
+                        <p:column  headerText="Telefono">
+                            <h:outputText id="txtTeflC" style="font-size:12px" value="#{VisitasRealizados.clienteEdentidad.telefonoCliente}"></h:outputText>
+                        </p:column>
+                        
+                        <p:column  headerText="Referencia">
+                            <h:outputText id="txtRefC" style="font-size:12px" value="#{VisitasRealizados.clienteEdentidad.referenciaCliente}"></h:outputText>
+                        </p:column>
+                        
+                        <p:column  headerText="NombTecnico">
+                           <h:outputText id="txtnomt" style="font-size:12px" value="#{VisitasRealizados.tecnicoEdentidad.nombreTecnico}"></h:outputText>
+                        </p:column>
+                       
+                        <p:column   headerText="TelefTecnico">
+                            <h:outputText id="txttelf" style="font-size:12px" value="#{VisitasRealizados.tecnicoEdentidad.telefonoTecnico}" ></h:outputText>
+                        </p:column>
+                        <p:column style="margin-right:35px; font-weight:bold" headerText="Estado">
+                            <h:outputText id="txtestado" style="font-size:12px" value="#{VisitasRealizados.estadoVisitaTec}" ></h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                                    
+                </h:panelGrid>
+                   <p:panel id="frmVisitasTecnicas" style="margin-right:37px;font-weight:bold"  header="Exportar Reporte" >
+                    <h:commandLink>
+                    <p:graphicImage name="/images/pdf.png" />
+                    <p:dataExporter type="pdf" target="dtvisitasrealizados" fileName="VisitasRealizados" pageOnly="true"></p:dataExporter>
+                    </h:commandLink>
+                       
+                    <h:commandLink>
+                    <p:graphicImage name="/images/excel.png" />
+                    <p:dataExporter type="xls" target="dtvisitasrealizados" fileName="VisitasRealizados" pageOnly="true"></p:dataExporter>
+                    </h:commandLink> 
+                    <p:commandButton id="btRegresarMenuprincipal" 
+                                 value="Regresar" action="/protegido/principal.xhtml" 
+                                 icon="pi pi-arrow-left">
+                    </p:commandButton>
+                    </p:panel>
+            </p:panel>
+        
+        </h:form> 
+    </h:body>
+</html>

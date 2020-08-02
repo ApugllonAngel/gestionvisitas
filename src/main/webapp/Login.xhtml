@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:p="http://primefaces.org/ui"
+            xmlns:f="http://java.sun.com/jsf/core"
+            xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
+     <h:head>
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+            #formularioLogin{
+                margin: 0 auto;
+                text-align: center;
+                width: 400px;                    
+            }
+        </style>
+    </h:head>
+     <h:body style="background-color:#CEF6EC">
+          
+             <p:panelGrid >
+                 <p:separator style="border-color: #0000FF"></p:separator>
+                 <center style="font-size:40px" > SISTEMAS DE GESTIÓN DE VISITAS TÉCNICAS </center >
+                 <center style="font-size:80px">  TECMACENT </center >
+                 <p:separator style="border-color: #0000FF"></p:separator>
+                 
+             </p:panelGrid>
+         
+         <h:form id="formularioLogin" >
+             
+             <p:messages autoUpdate="true" showDetail="true"/> 
+              
+            <p:panelGrid columns="2"> 
+                
+                <h:column >
+                    <center style="margin-right:1px;font-weight:bold">Iniciar Sesión</center>
+                    <p:separator style="background-color:#3ADF00"></p:separator> 
+                    <h:column >
+                   <h:graphicImage name="images/login1.jpg" width="250"  /> 
+                </h:column>
+                    <center style="font-size:14px">Por favor ingresa tu usuario y clave. Si tienes algún problema comunícate con el administrador</center>
+                </h:column>
+               
+                <h:graphicImage name="images/login.jpg" width="200" /> 
+                                
+                <p:outputLabel style="margin-right:1px;font-weight:bold" for="usuario"   value="usuario:" /> 
+                <p:inputText style="font-size:14px" id="usuario" value="#{loginview.user.usuario}" required="true" />
+                <p:outputLabel style="margin-right:1px;font-weight:bold" for="password" value="Password:" />
+                <p:password style="font-size:14px" id="password" value="#{loginview.user.password}" required="true" /> 
+                <h:column></h:column>
+                <p:commandButton style="font-size:14px" icon="ui-icon-star" value="Iniciar Seccion" action="#{loginview.iniciaseccion()}" ajax="false">
+                </p:commandButton> 
+                
+           </p:panelGrid>
+                         
+         </h:form>
+         
+    </h:body>
+</html>

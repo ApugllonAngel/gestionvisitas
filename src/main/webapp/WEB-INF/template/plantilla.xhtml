@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+          <h:head>
+        <title> Pantalla Principal</title>
+          <style>
+            #frmCliente{
+                margin: 0 auto;
+                text-align: center;
+                width: 900px;                    
+            }
+        </style>
+        </h:head>
+        
+        <f:event type="preRenderView" listener="#{plantillaController.verficarSeccion()}"/>
+    </h:head>
+
+    <h:body style="background-color:#8AA4E8;">
+        <p:panelGrid >
+                 <p:separator style="border-color: #A00FFF"></p:separator>
+                 <center style="font-size:25px"> SISTEMAS DE GESTIÓN DE VISITAS TÉCNICAS </center >
+                 <center style="font-size:25px">  TECMACET </center >
+                  <p:separator style="border-color: #0000FF"></p:separator>
+             </p:panelGrid>
+        <h:form id="frmCliente">
+            <ui:insert name="top">
+                <h:form >
+                    <p:menubar style="font-size:17px" model="#{rolesControlView.model}"> 
+                    <f:facet name="options">
+                       <p:commandButton style="font-size:15px" actionListener="#{rolesControlView.cerrarSeccion()}" value="cerrar seccion"  action="/Login?faces-redirect=true"/>
+                    </f:facet>
+                    </p:menubar>
+                     <h:graphicImage name="images/imagen.jpg" width="900" />
+                    </h:form>
+            
+            </ui:insert>
+        
+        </h:form>
+    </h:body>
+
+</html>

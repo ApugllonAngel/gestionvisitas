@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Listas Vistas Tecnicas</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
+        <style type="text/css">
+            #frmVisitasTecnicas{
+                margin: 0 auto;
+                text-align: center;
+                width: 1300px;  
+                
+            }
+            
+            .paneles1{
+                text-align: left;
+                margin-left: 15%;
+            }
+            
+            .calendarFilter{
+                width: 15px
+            }
+
+        </style>
+    </h:head>
+    <h:body style="background-color:#8AA4E8;">
+        <h:form id="frmVisitasTecnicas" >
+            <p:panel header="Listado de Visitas Tecnicas" style="float:end ">
+                <p:growl id="messages" showDetail="true" />
+                <p:separator></p:separator>
+                 <p:commandButton style="font-size:16px"
+                                  id="btRegresarMenuprincipal" 
+                                  value="Regresar" action="/protegido/principal"
+                                  icon="pi pi-arrow-left">
+                                      
+                </p:commandButton>
+                <p:separator></p:separator>
+                <h:panelGrid columns="2" id="listadatos">
+                    <p:dataTable id="listavisitastecnicas" var="lisVisTec" widgetVar="listavisitastecnicas" 
+                                 rows="10" paginator="true" paginatorPosition="bottom" scrollable="true" 
+                                 scrollRows="30" scrollHeight="500" value="#{VisitasTecnicasCore.listarvisitastecnicas}">
+                       <p:column style="font-size:14px" headerText="Id">
+                           <h:outputText   id="txtDID" value="#{lisVisTec.idVisitasTecnicas}"></h:outputText>
+                        </p:column>
+                        <p:column style="font-size:14px" headerText="FechaRegis">
+                            <h:outputText  id="txtFecha" value="#{lisVisTec.fecharegistro}" >
+                             <f:convertDateTime pattern="yyyy-MM-dd " type="date" />
+                            </h:outputText>
+                         </p:column>
+                        <p:column style="font-size:14px" headerText="Artefacto">
+                            <h:outputText  id="txtArt" value="#{lisVisTec.artefacto}"></h:outputText>
+                        </p:column>
+                        <p:column style="font-size:14px" headerText="Marca">
+                            <h:outputText  id="txtMarA" value="#{lisVisTec.marcaartefacto}"></h:outputText>
+                        </p:column>
+                        <p:column style="font-size:14px" headerText="Daño">
+                            <h:outputText  id="txtDaniAt" value="#{lisVisTec.daniotefacto}"></h:outputText>
+                        </p:column>
+                        <p:column style="font-size:14px" headerText="FechaVisT">
+                            <h:outputText  id="txtFechaVi" value="#{lisVisTec.fechavisitatec}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" type="date"/>
+                            </h:outputText>
+                        </p:column>                        
+                        <p:column style="font-size:14px" headerText="HoraVist">
+                            <h:outputText  id="txtHoraVisit" value="#{lisVisTec.hora}"></h:outputText>
+                        </p:column>
+                        <p:column style="font-size:14px" headerText="NomC"  >
+                            <h:outputText  id="txtnomc" value="#{lisVisTec.clienteEdentidad.nombreCliente}"></h:outputText>
+                        </p:column>
+                        <p:column style="font-size:14px" headerText="DirC" >
+                            <h:outputText  id="txtdirC" value="#{lisVisTec.clienteEdentidad.dirrecionCliente}"></h:outputText>
+                        </p:column>
+                        <p:column style="font-size:14px" headerText="TelfC">
+                            <h:outputText  id="txtTeflC" value="#{lisVisTec.clienteEdentidad.telefonoCliente}"></h:outputText>
+                        </p:column>
+                        <p:column style="font-size:14px" headerText="RefereC">
+                            <h:outputText  id="txtRefC" value="#{lisVisTec.clienteEdentidad.referenciaCliente}"></h:outputText>
+                        </p:column>
+                        <p:column style="font-size:14px" headerText="NomT" >
+                            <h:outputText  id="txtnomt" value="#{lisVisTec.tecnicoEdentidad.nombreTecnico}"></h:outputText>
+                        </p:column>
+                        <p:column style="font-size:14px" headerText="TelfT">
+                            <h:outputText  id="txttelf" value="#{(lisVisTec.tecnicoEdentidad.telefonoTecnico)}" ></h:outputText>
+                        </p:column>
+                        
+                         <p:column style="font-size:14px" headerText="Estado">
+                             <h:outputText  id="txtestado" value="#{(lisVisTec.estadoVisitaTec)}" ></h:outputText>
+                        </p:column>
+                        <p:column >
+                                     <p:commandButton style="font-size:13px" value="Update" 
+                                                 icon="fa fa-pencil-square-o" 
+                                                 process="@this"
+                                                 actionListener="#{VisitasTecnicasCore.antActualizarVisitas(lisVisTec)}" 
+                                                 onclick="PF('wdialog').show();"
+                                                 update=":frmVisitasTecnicas:txtfecha :frmVisitasTecnicas:txtArt 
+                                                 :frmVisitasTecnicas:txtMarca :frmVisitasTecnicas:txtDanio :frmVisitasTecnicas:txtfechaVist :frmVisitasTecnicas:txtHoraVis
+                                                 :frmVisitasTecnicas:txtNomC :frmVisitasTecnicas:txtDirC
+                                                 :frmVisitasTecnicas:txtTelC :frmVisitasTecnicas:txtRefC :frmVisitasTecnicas:txtEst">
+                                             
+                                     </p:commandButton>
+                                </p:column>
+                            
+                             <p:column >
+                                <p:commandButton style="font-size:13px" value="Delete" icon="fa fa-trash-o"  
+                                                 process="@this"
+                                                 actionListener="#{VisitasTecnicasCore.eliminarVisitasTecnicas(lisVisTec)}"
+                                                 update ="listavisitastecnicas">
+                                </p:commandButton>
+                            </p:column>
+                        
+                    </p:dataTable>
+                </h:panelGrid>
+            </p:panel>
+            <p:dialog id="dtVisitasTecnicas" widgetVar="wdialog" header="Actualizacion de Registro"
+                              >
+                        <h:panelGrid columns="4">
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Fecha Restro: </p:outputLabel>
+                            <p:calendar id="txtfecha"  value="#{VisitasTecnicasCore.nuevoVisitasTecnicasAct.fecharegistro}" readonly="true"  ></p:calendar>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Artefacto: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtArt" size="30" value="#{VisitasTecnicasCore.nuevoVisitasTecnicasAct.artefacto}"></p:inputText>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Marca: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtMarca" size="30" value="#{VisitasTecnicasCore.nuevoVisitasTecnicasAct.marcaartefacto}"></p:inputText>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Daño: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtDanio" size="30" value="#{VisitasTecnicasCore.nuevoVisitasTecnicasAct.daniotefacto}"></p:inputText>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Fecha VisTec: </p:outputLabel>
+                            <p:calendar id="txtfechaVist"  value="#{VisitasTecnicasCore.nuevoVisitasTecnicasAct.fechavisitatec}" readonly="true"  ></p:calendar>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Hora: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtHoraVis" size="30" value="#{VisitasTecnicasCore.nuevoVisitasTecnicasAct.hora}"></p:inputText>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Nombre: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtNomC" size="30" value="#{VisitasTecnicasCore.nuevoVisitasTecnicasAct.clienteEdentidad.nombreCliente}"></p:inputText>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Direccion: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtDirC" size="30" value="#{VisitasTecnicasCore.nuevoVisitasTecnicasAct.clienteEdentidad.dirrecionCliente}"></p:inputText>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Telefono: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtTelC" size="20" value="#{VisitasTecnicasCore.nuevoVisitasTecnicasAct.clienteEdentidad.telefonoCliente}"></p:inputText>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Referencia Domicilio: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtRefC" size="30" value="#{VisitasTecnicasCore.nuevoVisitasTecnicasAct.clienteEdentidad.referenciaCliente}"></p:inputText>
+                            <p:outputLabel style="margin-right:37px;font-weight:bold">Estado:</p:outputLabel>
+                            <p:selectOneMenu id="txtEst" value="#{VisitasTecnicasCore.nuevoVisitasTecnicasAct.estadoVisitaTec}" style="width:200px">
+                                <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                <f:selectItem itemLabel="Pendiente" itemValue="pendiente" />
+                                <f:selectItem itemLabel="Realizado" itemValue="realizado" />
+                             </p:selectOneMenu>
+                            <p:separator></p:separator>
+                            <p:commandButton style="font-size:16px" value="Modificar los Datos" 
+                                             icon="fa fa-save" 
+                                             process="@this txtfecha txtArt txtMarca txtDanio txtfechaVist txtHoraVis txtNomC txtDirC txtTelC txtRefC txtEst"                                             
+                                             action="#{VisitasTecnicasCore.actualizarVisitasTecnicas()}"
+                                             update="listavisitastecnicas">                                             
+                            </p:commandButton>
+                           
+                        </h:panelGrid>
+                    </p:dialog> 
+            
+        </h:form> 
+    </h:body>
+</html>

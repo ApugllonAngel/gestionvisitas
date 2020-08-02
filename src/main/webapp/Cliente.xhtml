@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+     <h:head>
+        <title>Formulario Cliente</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+            #frmCliente{
+                margin: 0 auto;
+                text-align: center;
+                width: 1000px;                    
+            }
+        </style>
+    </h:head>
+    <body style="background-color:#8AA4E8;">
+        <h:form id="frmCliente">
+                    <p:growl id="messages" showDetail="true" />
+                    <p:panel id="paneles" header="Ingreso de Cliente " >
+                        <h:graphicImage name="images/cliente.jpg" width="200" />
+                        <h:panelGrid columns="4">
+                            <p:outputLabel style="margin-right:5px;font-weight:bold"> Nombre: </p:outputLabel>
+                            <p:inputText id="itNombre"  style="font-size:16px" size="30" value="#{Clientecore.nombreCliente}"></p:inputText>
+                            <p:outputLabel style="margin-right:5px;font-weight:bold"> Direccion: </p:outputLabel>
+                            <p:inputText id="itDireccion" style="font-size:16px" size="30" value="#{Clientecore.dirrecionCliente}"></p:inputText>
+                             <p:outputLabel style="margin-right:5px;font-weight:bold"> Telefono: </p:outputLabel>
+                             <p:inputText id="itTelefono" style="font-size:16px" size="20" value="#{Clientecore.telefonoCliente}"></p:inputText>
+                              <p:outputLabel style="margin-right:5px;font-weight:bold"> Referencia Domicilio: </p:outputLabel>
+                              <p:inputText id="itRefereC" style="font-size:16px" size="30" value="#{Clientecore.referenciaCliente}"></p:inputText>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <p:commandButton style="margin-right:10px;font-weight:bold" value="Guardar" icon="fa fa-save" 
+                                             process="@this itNombre itDireccion itTelefono itRefereC"
+                                             action="#{Clientecore.insertarCliente()}" 
+                                             update =":frmCliente:dtCliente"> </p:commandButton>
+                            
+                            <p:commandButton id="btRegresarMenuprincipal" style="margin-right:10px;font-weight:bold"
+                                             value="Regresar" action="/protegido/principal" 
+                                             icon="pi pi-arrow-left">
+                            </p:commandButton>
+                 </h:panelGrid>
+                    </p:panel>
+
+                    <h:panelGrid>
+                        <p:dataTable id="dtCliente" var="listCliente" widgetVar="listCliente" rows="10"
+                                     paginator="true"  value="#{Clientecore.listarCliente}" 
+                                     scrollRows="30" scrollHeight="300" scrollable="true">
+                            
+                            <p:column style="font-size:14px" headerText="ID"  >
+                                <h:outputText  value="#{listCliente.idCliente}"></h:outputText>
+                            </p:column>
+                            <p:column style="font-size:14px" filterBy="#{listCliente.nombreCliente}" headerText="Nombre" >
+                                <h:outputText  value="#{listCliente.nombreCliente}"></h:outputText>
+                            </p:column>
+                            <p:column style="font-size:14px" headerText="Direccion">
+                                <h:outputText  value="#{listCliente.dirrecionCliente}"></h:outputText>
+                            </p:column>
+                            <p:column style="font-size:14px" headerText="Telefono">
+                                <h:outputText  value="#{listCliente.telefonoCliente}"></h:outputText>
+                            </p:column>
+                            <p:column style="font-size:14px" headerText="ReferenciC">
+                                <h:outputText  value="#{listCliente.referenciaCliente}"></h:outputText>
+                            </p:column>
+
+                            <p:column >
+                                <p:commandButton style="font-size:14px" value="Udate" 
+                                                 icon="fa fa-pencil-square-o" 
+                                                 process="@this"
+                                                 actionListener="#{Clientecore.antActualizar(listCliente)}" 
+                                                 onclick="PF('wdialog').show();"
+                                                 update=":frmCliente:txtNombre :frmCliente:txtDir :frmCliente:txtTelf :frmCliente:txtRefeC">
+                                </p:commandButton>
+                            </p:column>
+                            
+                            <p:column >
+                                <p:commandButton style="font-size:14px" value="Delete" icon="fa fa-trash-o"  
+                                                 process="@this"
+                                                 actionListener="#{Clientecore.eliminar(listCliente)}"
+                                                 update ="dtCliente">
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:panelGrid>        
+
+                    <p:dialog id="dlCliente" widgetVar="wdialog" header="Actualizacion de Registro"
+                              >
+                        <h:panelGrid columns="2">
+                            <p:outputLabel style="margin-right:5px;font-weight:bold"> Nombre: </p:outputLabel>
+                            <p:inputText id="txtNombre" size="30" value="#{Clientecore.nuevoClienteAct.nombreCliente}"></p:inputText>
+                            <p:outputLabel style="margin-right:5px;font-weight:bold"> Direccion: </p:outputLabel>
+                            <p:inputText id="txtDir" size="30" value="#{Clientecore.nuevoClienteAct.dirrecionCliente}"></p:inputText>
+                            <p:outputLabel style="margin-right:5px;font-weight:bold"> Telefo: </p:outputLabel>
+                            <p:inputText id="txtTelf" size="30" value="#{Clientecore.nuevoClienteAct.telefonoCliente}"></p:inputText>
+                            <p:outputLabel style="margin-right:5px;font-weight:bold"> Referencia: </p:outputLabel>
+                            <p:inputText id="txtRefeC" size="30" value="#{Clientecore.nuevoClienteAct.referenciaCliente}"></p:inputText>
+                            <p:commandButton style="font-size:13px" value="Modificar los Datos" 
+                                             icon="fa fa-save" 
+                                             process="@this txtNombre  txtDir txtTelf txtRefeC"                                             
+                                             action="#{Clientecore.actualizarCliente()}"
+                                             update="dtCliente">                                             
+                            </p:commandButton>
+                           
+                        </h:panelGrid>
+                    </p:dialog>                    
+
+
+
+                </h:form>
+      </body>
+</html>
+
+

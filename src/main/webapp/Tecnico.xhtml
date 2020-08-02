@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+     <h:head>
+        <title>Formulario Tecnico</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+            #frmTecnico{
+                margin: 0 auto;
+                text-align: center;
+                width: 1150px;                    
+            }
+        </style>
+    </h:head>
+    <body style="background-color:#8AA4E8;">
+        <h:form id="frmTecnico">
+                    <p:growl id="messages" showDetail="true" />
+                    <p:panel id="paneles" header="Ingreso del Tecnico " >
+                        <h:graphicImage name="images/Tecnico.png" width="200" />
+                        <h:panelGrid columns="4">
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Nombre Tecnico: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="itNombretec" size="30" value="#{TecnicoCore.nombreTecnico}"></p:inputText>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold" > Direccion Tecnico: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="itDirecciontec" size="30" value="#{TecnicoCore.dirrecionTecnico}"></p:inputText>
+                             <p:outputLabel style="margin-right:1px;font-weight:bold"> Telefono Tecnico: </p:outputLabel>
+                             <p:inputText style="font-size:14px" id="itTelefonotec" size="20" value="#{TecnicoCore.telefonoTecnico}"></p:inputText>
+                              <p:outputLabel style="margin-right:1px;font-weight:bold"> Area Tecnico: </p:outputLabel>
+                              <p:inputText style="font-size:14px" id="itAreatec" size="30" value="#{TecnicoCore.areaTecnico}"></p:inputText>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <p:commandButton style="font-size:16px" value="Guardar" icon="fa fa-save" 
+                                             process="@this itNombretec itDirecciontec itTelefonotec itAreatec"
+                                             action="#{TecnicoCore.insertarTecnico()}" 
+                                             update =":frmTecnico:dtTecnico"> 
+                            </p:commandButton>
+                            <p:commandButton  style="font-size:16px" id="btRegresarMenuprincipal" 
+                                             value="Regresar" action="/protegido/principal" 
+                                             icon="pi pi-arrow-left">
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <h:panelGrid>
+                        <p:dataTable id="dtTecnico" var="listTecnico" widgetVar="listTecnico" rows="10"
+                                     paginator="true"  value="#{TecnicoCore.listarTecnico}" 
+                                     scrollRows="30" scrollHeight="300" scrollable="true">
+                            
+                            <p:column style="font-size:14px" headerText="ID"  >
+                                <h:outputText  value="#{listTecnico.idTecnico}"></h:outputText>
+                            </p:column>
+                            <p:column style="font-size:14px" filterBy="#{listTecnico.nombreTecnico}" headerText="Nombre" >
+                                <h:outputText  value="#{listTecnico.nombreTecnico}"></h:outputText>
+                            </p:column>
+                            <p:column style="font-size:14px" headerText="Direccion">
+                                <h:outputText  value="#{listTecnico.dirrecionTecnico}"></h:outputText>
+                            </p:column>
+                            <p:column style="font-size:14px" headerText="Telefono">
+                                <h:outputText  value="#{listTecnico.telefonoTecnico}"></h:outputText>
+                            </p:column>
+                            <p:column style="font-size:14px" headerText="AreaT">
+                                <h:outputText  value="#{listTecnico.areaTecnico}"></h:outputText>
+                            </p:column>
+
+                            <p:column >
+                                <p:commandButton style="font-size:15px" value="Update" 
+                                                 icon="fa fa-pencil-square-o" 
+                                                 process="@this"
+                                                 actionListener="#{TecnicoCore.antActualizar(listTecnico)}" 
+                                                 onclick="PF('wdialog').show();"
+                                                 update=":frmTecnico:txtNombre :frmTecnico:txtDir :frmTecnico:txtTelf :frmTecnico:txtArea">
+                                </p:commandButton>
+                            </p:column>
+                            
+                            <p:column >
+                                <p:commandButton style="font-size:15px" value="Delete" icon="fa fa-trash-o"  
+                                                 process="@this"
+                                                 actionListener="#{TecnicoCore.eliminar(listTecnico)}"
+                                                 update ="dtTecnico">
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:panelGrid>        
+
+                    <p:dialog id="dlTecnico" widgetVar="wdialog" header="Actualizacion de Registro"
+                              >
+                        <h:panelGrid columns="2">
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Nombre: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtNombre" size="30" value="#{TecnicoCore.nuevoTecnicoAct.nombreTecnico}"></p:inputText>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Direccion: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtDir" size="30" value="#{TecnicoCore.nuevoTecnicoAct.dirrecionTecnico}"></p:inputText>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Telefo: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtTelf" size="30" value="#{TecnicoCore.nuevoTecnicoAct.telefonoTecnico}"></p:inputText>
+                            <p:outputLabel style="margin-right:1px;font-weight:bold"> Email: </p:outputLabel>
+                            <p:inputText style="font-size:14px" id="txtArea" size="30" value="#{TecnicoCore.nuevoTecnicoAct.areaTecnico}"></p:inputText>
+                            <p:commandButton style="font-size:16px" value="Modificar los Datos" 
+                                             icon="fa fa-save" 
+                                             process="@this txtNombre  txtDir txtTelf txtArea"                                             
+                                             action="#{TecnicoCore.actualizarTecnico()}"
+                                             update="dtTecnico">                                             
+                            </p:commandButton>
+                           
+                        </h:panelGrid>
+                    </p:dialog>                    
+
+
+
+                </h:form>
+      </body>
+</html>
+
+
